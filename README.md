@@ -64,10 +64,11 @@ ZooSmart es un espacio seguro y amigable donde los amantes de los animales puede
    - Relacionada con la tabla de usuarios mediante el ID de usuario y el ID de usuario de contacto.
    - Permite a los usuarios guardar y mantener una lista de contactos.
 
-6. Tabla de contactos:
+6. Tabla de animales:
 
-   - Relacionada con la tabla de usuarios mediante el ID de usuario y el ID de usuario de contacto.
-   - Permite a los usuarios guardar y mantener una lista de contactos.
+   - Descripción: Almacena información específica sobre los animales disponibles para adopción en la plataforma.
+   - Columnas sugeridas: animal_id, user_id, nombre del animal, especie, edad, descripción, imagen.
+   - Esta tabla proporciona detalles clave sobre cada animal, como nombre, especie, edad y descripción, lo que ayuda a los usuarios a encontrar la mascota adecuada para su adopción.
 
 7. Imagen de referencia:
 
