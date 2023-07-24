@@ -49,31 +49,49 @@ ZooSmart es un espacio seguro y amigable donde los amantes de los animales puede
    - Cada publicación pertenece a un usuario específico.
    - Puede tener una relación con la tabla de me gusta para registrar los me gusta recibidos.
 
-3. Tabla de me gusta:
+3. Tabla de perfiles de usuarios:
+
+   - Contiene información adicional de los perfiles de los usuarios registrados.
+   - profile_id, user_id, información adicional del perfil (ubicación, biografía, etc.).
+   - Esta tabla permite a los usuarios proporcionar detalles adicionales sobre sí mismos en sus perfiles.
+
+4. Tabla de me gusta:
 
    - Relacionada con la tabla de usuarios y la tabla de publicaciones mediante el ID de usuario y el ID de publicación.
    - Registra qué usuarios han dado me gusta a qué publicaciones.
 
-4. Tabla de mensajes:
+5. Tabla de mensajes:
 
    - Relacionada con la tabla de usuarios mediante el ID de remitente y el ID de destinatario.
    - Almacena los mensajes enviados entre usuarios.
 
-5. Tabla de contactos:
+6. Tabla de contactos:
 
    - Relacionada con la tabla de usuarios mediante el ID de usuario y el ID de usuario de contacto.
    - Permite a los usuarios guardar y mantener una lista de contactos.
 
-6. Tabla de animales:
+7. Tabla de animales:
 
    - Descripción: Almacena información específica sobre los animales disponibles para adopción en la plataforma.
    - Columnas sugeridas: animal_id, user_id, nombre del animal, especie, edad, descripción, imagen.
    - Esta tabla proporciona detalles clave sobre cada animal, como nombre, especie, edad y descripción, lo que ayuda a los usuarios a encontrar la mascota adecuada para su adopción.
 
-7. Imagen de referencia:
+8. Tabla de países:
 
-   ![](./img/Estructura.png))
+   - Descripción: Almacena información sobre los países disponibles en la plataforma.
+   - Columnas sugeridas: id_pais (clave primaria), nombre del país.
+   - Esta tabla permite a los usuarios seleccionar el país al que pertenece la ubicación del animal en la publicación.
+
+9. Tabla de ciudades:
+
+   - Descripción: Almacena información sobre las ciudades disponibles en la plataforma.
+   - Columnas sugeridas: id_ciudad (clave primaria), nombre de la ciudad, id_pais (clave externa que hace referencia a la tabla de países).
+   - Esta tabla proporciona una lista de ciudades asociadas a cada país para que los usuarios elijan la ubicación específica del animal en la publicación.
+
+10. Imagen de referencia:
+
+   ![](./img/Estructura.png)
 
 ## Meta
 
-- El viernes 21 de julio tener adelantado la base de datos hecha completamente, el server montado con express y ya tener algunos endpoints totalmente funcionales, donde se realicen varias consultas básicas en la base de datos, tanto de ingreso, consulta, actualizacion de datos.
+- El viernes 28 de julio tener adelantado la base de datos hecha completamente, el server montado con express y ya tener algunos endpoints totalmente funcionales, donde se realicen varias consultas básicas en la base de datos, tanto de ingreso, consulta, actualización de datos.
