@@ -27,7 +27,7 @@ export class storageUsers {
     @Type(() => String)
     password: string;
     @Expose({ name: 'fecha-registro' })
-    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return (value) ? value : "undefined" ; else throw {status: 406, message: "El formato del parametro titulo-libro no es correcto"};}, { toClassOnly: true })
+    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return (value) ? value : "2023-08-16" ; else throw {status: 406, message: "El formato del parametro titulo-libro no es correcto"};}, { toClassOnly: true })
     fecha_registro: string;
 
 

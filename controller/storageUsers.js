@@ -63,7 +63,7 @@ __decorate([
 __decorate([
     Expose({ name: 'fecha-registro' }),
     Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
-        return (value) ? value : "undefined";
+        return (value) ? value : "2023-08-16";
     else
         throw { status: 406, message: "El formato del parametro titulo-libro no es correcto" }; }, { toClassOnly: true }),
     __metadata("design:type", String)
