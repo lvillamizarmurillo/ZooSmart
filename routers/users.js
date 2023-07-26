@@ -21,10 +21,28 @@ appUsers.use((req,res,next)=>{
 
 appUsers.get("/",(req, res) => {
     con.query(
-        /*sql*/`SELECT * FROM users`, (error,data)=>{
+        /*sql*/`SELECT user_id,nombre,email,numero,password,DATE_FORMAT(fecha_registro, '%d-%m-%Y') AS fecha_registro FROM users `, (error,data)=>{
             if(error){
                 console.log(error);
-                res.status(500).send("Error executing query");
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            }else{
+                console.log(data);
+                res.status(200).send(data);
+            }
+    });
+});
+
+appUsers.get("/id",(req, res) => {
+    const {id} = req.body;
+    if(!id){
+        return res.status(400).send("Si quiere buscar a un usuario, debe poner id: y el user_id"); 
+    }
+    con.query(
+        `SELECT nombre,email,numero,password,DATE_FORMAT(fecha_registro, '%d-%m-%Y') AS fecha_registro FROM users WHERE user_id = ?`,
+        [id],(err,data)=>{
+            if(err){
+                console.log(err);
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
             }else{
                 console.log(data);
                 res.status(200).send(data);
@@ -33,14 +51,14 @@ appUsers.get("/",(req, res) => {
 });
 
 appUsers.post("/", appmiddlewareUsers, (req,res)=>{
-    const {user_id, nombre, email, numero, password, fecha_registro} = req.body;
+    const {user_id, nombre, email, numero, password} = req.body;
     con.query(
-        'INSERT INTO users(user_id, nombre, email, numero, password, fecha_registro) VALUE(?,?,?,?,?,?)',
-        [user_id, nombre, email, numero, password, fecha_registro],
+        'INSERT INTO users(user_id, nombre, email, numero, password) VALUE(?,?,?,?,?)',
+        [user_id, nombre, email, numero, password],
         (err,data)=>{
             if (err) {
                 console.log(err);
-                res.status(500).send("El usuario ya existe");
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
               } else {
                 console.log(data);
                 res.status(200).send("Nuevo usuario agregada exitosamente");
@@ -48,5 +66,41 @@ appUsers.post("/", appmiddlewareUsers, (req,res)=>{
         }
     )
 });
+
+appUsers.put("/", appmiddlewareUsers,(req,res)=>{
+    const {user_id, nombre, email, numero, password} = req.body;
+    con.query(
+        `UPDATE users SET nombre = ?, email = ?, numero = ?, password = ? WHERE user_id = ?`,
+        [nombre, email, numero, password,user_id],
+        (err,data)=>{
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
+              } else {
+                console.log(data);
+                res.status(200).send("Usuario actualizado con exito");
+              }
+        }
+    )
+})
+
+appUsers.delete("/",(req,res)=>{
+    const {id} = req.body;
+    if(!id){
+        return res.status(400).send("Si quiere borrar un usuario, debe poner id: y el user_id"); 
+    }
+    con.query(
+        `DELETE FROM users WHERE user_id = ?`,
+        [id],(error, results) => {
+            if (error) {
+              console.log(error);
+              res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            } else {
+              console.log(results);
+              res.status(200).send("Usuario eliminado exitosamente");
+            }
+        }
+    )
+})
 
 export default appUsers;

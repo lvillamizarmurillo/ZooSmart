@@ -10,13 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose, Transform, Type } from 'class-transformer';
 import { IsDefined, IsNumber, IsString, MaxLength, MinLength, IsEmail } from 'class-validator';
 export class storageUsers {
-    constructor(user_id, nombre, email, numero, password, fecha_registro) {
+    constructor(user_id, nombre, email, numero, password) {
         this.user_id = user_id;
         this.nombre = nombre;
         this.email = email;
         this.numero = numero;
         this.password = password;
-        this.fecha_registro = fecha_registro;
     }
 }
 __decorate([
@@ -60,11 +59,3 @@ __decorate([
     Type(() => String),
     __metadata("design:type", String)
 ], storageUsers.prototype, "password", void 0);
-__decorate([
-    Expose({ name: 'fecha-registro' }),
-    Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
-        return (value) ? value : "2023-08-16";
-    else
-        throw { status: 406, message: "El formato del parametro titulo-libro no es correcto" }; }, { toClassOnly: true }),
-    __metadata("design:type", String)
-], storageUsers.prototype, "fecha_registro", void 0);

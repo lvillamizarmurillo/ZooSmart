@@ -26,18 +26,14 @@ export class storageUsers {
     @MaxLength(12, {message : ()=> { throw {status: 411, message: `El password supero el limite :(`}}})
     @Type(() => String)
     password: string;
-    @Expose({ name: 'fecha-registro' })
-    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return (value) ? value : "2023-08-16" ; else throw {status: 406, message: "El formato del parametro titulo-libro no es correcto"};}, { toClassOnly: true })
-    fecha_registro: string;
 
 
 
-    constructor(user_id: number, nombre: string, email: string, numero: number, password: string, fecha_registro: string) {
+    constructor(user_id: number, nombre: string, email: string, numero: number, password: string) {
       this.user_id = user_id;
       this.nombre = nombre;
       this.email = email;
       this.numero = numero;
       this.password = password;
-      this.fecha_registro = fecha_registro;
     }
 }

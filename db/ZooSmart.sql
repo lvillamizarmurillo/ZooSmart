@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(50) UNIQUE,
     numero VARCHAR(20),
     password VARCHAR(20),
-    fecha_registro DATE
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS publicaciones(
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS publicaciones(
     titulo VARCHAR(255),
     descripcion TEXT,
     imagen_ruta VARCHAR(255),
-    fecha_creacion DATE
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS animales(
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS me_gusta(
     like_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
     user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
     post_id INT(10) UNSIGNED, FOREIGN KEY (post_id) REFERENCES publicaciones(post_id),
-    fecha_like DATE
+    fecha_like TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE IF NOT EXISTS pais(
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS mensajes(
     enviado_id INT(10) UNSIGNED, FOREIGN KEY (enviado_id) REFERENCES users(user_id),
     recibido_id INT(10) UNSIGNED, FOREIGN KEY (recibido_id) REFERENCES users(user_id),
     contenido TEXT,
-    fecha_envio DATE
+    fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS contactos(
@@ -68,14 +68,14 @@ CREATE TABLE IF NOT EXISTS perfil(
     biografia TEXT
 );
 
-INSERT INTO users (user_id, nombre, email, numero, password, fecha_registro) VALUES
-(1, 'Gabriel', 'colombiano@gmail.com', '321564561', 'password1', '2023-07-23'),
-(2, 'J.K.', 'juan.perez@example.com', '31285548841', 'password2', '2023-07-23'),
-(3, 'Stephen', 'maria.gomez@example.com', '32165198', 'password3', '2023-07-23'),
-(4, 'Isabel', 'chileno@gmail.com', '312561518', 'password4', '2023-07-23'),
-(5, 'Haruki', 'japonés@gmail.com', '3218484815', 'password5', '2023-07-23'),
-(6, 'Jane', 'pedro.lopez@example.com', '3181891511', 'password6', '2023-07-23'),
-(7, 'Ernest', 'estadounidense@gmail.com', '31518915157', 'password7', '2023-07-23'),
-(8, 'Mario', 'peruano@gmail.com', '3181123115', 'password8', '2023-07-23'),
-(9, 'Emily', 'britanico@gmail.com', '31812652894', 'password9', '2023-07-23'),
-(10, 'Leo', 'ruso@gmail.com', '23156181515', 'password10', '2023-07-23');
+INSERT INTO users (user_id, nombre, email, numero, password) VALUES
+(1, 'Gabriel', 'colombiano@gmail.com', '321564561', 'password1'),
+(2, 'J.K.', 'juan.perez@example.com', '31285548841', 'password2'),
+(3, 'Stephen', 'maria.gomez@example.com', '32165198', 'password3'),
+(4, 'Isabel', 'chileno@gmail.com', '312561518', 'password4'),
+(5, 'Haruki', 'japonés@gmail.com', '3218484815', 'password5'),
+(6, 'Jane', 'pedro.lopez@example.com', '3181891511', 'password6'),
+(7, 'Ernest', 'estadounidense@gmail.com', '31518915157', 'password7'),
+(8, 'Mario', 'peruano@gmail.com', '3181123115', 'password8'),
+(9, 'Emily', 'britanico@gmail.com', '31812652894', 'password9'),
+(10, 'Leo', 'ruso@gmail.com', '23156181515', 'password10');
