@@ -1,5 +1,5 @@
 import { Expose, Transform , Type} from 'class-transformer';
-import { IsDefined, IsNumber, IsString, MaxLength, MinLength, IsDate, IsEmail } from 'class-validator';
+import { IsDefined, IsNumber, IsString, MaxLength, MinLength, IsEmail } from 'class-validator';
 export class storageUsers {
     @Expose({ name: 'id' })
     @IsDefined({message: ()=>{throw {status:422, message: "El parametro id es obligatorio"}}})

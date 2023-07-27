@@ -79,3 +79,16 @@ INSERT INTO users (user_id, nombre, email, numero, password) VALUES
 (8, 'Mario', 'peruano@gmail.com', '3181123115', 'password8'),
 (9, 'Emily', 'britanico@gmail.com', '31812652894', 'password9'),
 (10, 'Leo', 'ruso@gmail.com', '23156181515', 'password10');
+
+INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta) VALUES
+(35, 1, 'Rico o pobre', 'asdfasdfsadfsdf', 'http://imagen/ruta1'),
+(85, 2, 'bitcoin', 'dsgdsfgfdsgfdsdfsg', 'http://imagen/ruta2'),
+(87, 3, 'el tiempo', 'dsfgdfgsdfgfdgsd', 'http://imagen/ruta3'),
+(84, 4, 'Quiubo', 'sdfgfsdgdfsgdfsgd', 'http://imagen/ruta4'),
+(25, 5, 'Caracol', 'sdfgsdgfsdgsdfgs', 'http://imagen/ruta5'),
+(98, 6, 'La voz kids', 'sdfgdsfgsdfgsdfgsdf', 'http://imagen/ruta6'),
+(36, 7, 'Master cheff', 'dfsgfdsgfdsgsdfgd', 'http://imagen/ruta7'),
+(74, 8, 'Perro pulgoso', 'psdfgdfgertwtwert', 'http://imagen/ruta8'),
+(12, 9, 'Kamusari', 'hgfhjghjfhjfgjhfghj', 'http://imagen/ruta9'),
+(96, 10, 'Dinamarca', 'jhñlkhklhjjfgsfdsaf', 'http://imagen/ruta10'),
+(99, 3, 'Venezuela', 'yurtuityiuytiyu', 'http://imagen/ruta11');
