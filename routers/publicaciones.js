@@ -111,32 +111,7 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
 });
 
 appPublicaciones.delete("/",(req,res)=>{
-    const {id} = req.body;
-    if(!id){
-        return res.status(400).send("Si quiere borrar una publicacion, debe poner id: y el post_id"); 
-    }
-    con.query(
-        `DELETE FROM animales WHERE post_id = ?`
-        [id],(err,data)=>{
-            if(err){
-                console.log(err);
-                res.status(500).send("Error en el servidor: "+err.sqlMessage);
-            }else{
-                con.query(
-                    `DELETE FROM publicaciones WHERE post_id = ?`,
-                    [id],(error, results) => {
-                        if (error) {
-                          console.log(error);
-                          res.status(500).send("Error en el servidor: "+err.sqlMessage);
-                        } else {
-                          console.log(results);
-                          res.status(200).send("Publicacion eliminada exitosamente");
-                        }
-                    }
-                )
-            }
-        }
-    )
+    return res.status(500).send("No esta habilitado para borrar publicaciones.");
 })
 
 export default appPublicaciones;
