@@ -106,12 +106,11 @@ INSERT INTO animales (animal_id, user_id, post_id, nombre, especie, edad) VALUES
 (12,10,96, 'chimpance', 'sopadomacaco', '6'),
 (10,3,99, 'camionero', 'trenalsur', '23');
 
-
--- CREATE TABLE IF NOT EXISTS animales(
---     animal_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
---     user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
---     post_id INT(10) UNSIGNED, FOREIGN KEY (post_id) REFERENCES publicaciones(post_id),
---     nombre VARCHAR(50),
---     especie VARCHAR(50),
---     edad INT(3)
--- );
+INSERT INTO me_gusta (like_id, user_id, post_id) VALUES
+(1, 1, 35),
+(2,2,85),
+(3,3,87),
+(4,4,84),
+(5,5,25),
+(6,6,98),
+(7,7,36);
