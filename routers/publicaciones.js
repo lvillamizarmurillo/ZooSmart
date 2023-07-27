@@ -43,6 +43,8 @@ appPublicaciones.get("/id",(req, res) => {
             if(err){
                 console.log(err);
                 res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            }else if(data.length === 0){
+                res.status(404).send("La publicacion que esta buscando no existe");
             }else{
                 console.log(data);
                 res.status(200).send(data);
@@ -96,10 +98,10 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
                             console.log(err);
                             res.status(500).send("Error en el servidor: "+err.sqlMessage);
                           }else if(data.length === 0){
-                            res.status(500).send("Error: el usuario no existe en la tabla de usuarios");
+                            res.status(500).send("Error: la publicacion no existe en la tabla de publicaciones");
                           } else {
                             console.log(data);
-                            res.status(200).send("Usuario actualizado con exito");
+                            res.status(200).send("publicacion actualizada con exito");
                           }
                     }
                 )
@@ -111,17 +113,27 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
 appPublicaciones.delete("/",(req,res)=>{
     const {id} = req.body;
     if(!id){
-        return res.status(400).send("Si quiere borrar un usuario, debe poner id: y el post_id"); 
+        return res.status(400).send("Si quiere borrar una publicacion, debe poner id: y el post_id"); 
     }
     con.query(
-        `DELETE FROM publicaciones WHERE post_id = ?`,
-        [id],(error, results) => {
-            if (error) {
-              console.log(error);
-              res.status(500).send("Error en el servidor: "+err.sqlMessage);
-            } else {
-              console.log(results);
-              res.status(200).send("Publicacion eliminada exitosamente");
+        `DELETE FROM animales WHERE post_id = ?`
+        [id],(err,data)=>{
+            if(err){
+                console.log(err);
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            }else{
+                con.query(
+                    `DELETE FROM publicaciones WHERE post_id = ?`,
+                    [id],(error, results) => {
+                        if (error) {
+                          console.log(error);
+                          res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                        } else {
+                          console.log(results);
+                          res.status(200).send("Publicacion eliminada exitosamente");
+                        }
+                    }
+                )
             }
         }
     )

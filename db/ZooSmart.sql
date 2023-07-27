@@ -92,3 +92,26 @@ INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta) V
 (12, 9, 'Kamusari', 'hgfhjghjfhjfgjhfghj', 'http://imagen/ruta9'),
 (96, 10, 'Dinamarca', 'jhñlkhklhjjfgsfdsaf', 'http://imagen/ruta10'),
 (99, 3, 'Venezuela', 'yurtuityiuytiyu', 'http://imagen/ruta11');
+
+INSERT INTO animales (animal_id, user_id, post_id, nombre, especie, edad) VALUES
+(1, 1, 35, 'perro', 'canino', '12'),
+(2,2,85, 'gato', 'gatuno', '13'),
+(3,3,87, 'canario', 'ave', '15'),
+(4,4,84, 'capullo', 'champiras', '5'),
+(5,5,25, 'semental', 'tolgota', '8'),
+(6,6,98, 'Loro', 'mishubishi', '7'),
+(7,7,36, 'Champiñon', 'nokia', '8'),
+(8,8,74, 'michi', 'terreneitor', '12'),
+(9,9,12, 'tamarindo', 'empanadas', '2'),
+(12,10,96, 'chimpance', 'sopadomacaco', '6'),
+(10,3,99, 'camionero', 'trenalsur', '23');
+
+
+-- CREATE TABLE IF NOT EXISTS animales(
+--     animal_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
+--     user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
+--     post_id INT(10) UNSIGNED, FOREIGN KEY (post_id) REFERENCES publicaciones(post_id),
+--     nombre VARCHAR(50),
+--     especie VARCHAR(50),
+--     edad INT(3)
+-- );

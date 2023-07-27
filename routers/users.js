@@ -94,21 +94,31 @@ appUsers.delete("/",(req,res)=>{
         return res.status(400).send("Si quiere borrar un usuario, debe poner id: y el user_id"); 
     }
     con.query(
-        `DELETE FROM publicaciones WHERE user_id = ?`,
+        `DELETE FROM animales WHERE user_id = ?`,
         [id],(err,data)=>{
             if(err){
                 console.log(err);
                 res.status(500).send("Error en el servidor: "+err.sqlMessage);
             }else{
                 con.query(
-                    `DELETE FROM users WHERE user_id = ?`,
-                    [id],(error, results) => {
-                        if (error) {
-                          console.log(error);
-                          res.status(500).send("Error en el servidor: "+err.sqlMessage);
-                        } else {
-                          console.log(results);
-                          res.status(200).send("Usuario eliminado exitosamente");
+                    `DELETE FROM publicaciones WHERE user_id = ?`,
+                    [id],(err,data)=>{
+                        if(err){
+                            console.log(err);
+                            res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                        }else{
+                            con.query(
+                                `DELETE FROM users WHERE user_id = ?`,
+                                [id],(error, results) => {
+                                    if (error) {
+                                      console.log(error);
+                                      res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                                    } else {
+                                      console.log(results);
+                                      res.status(200).send("Usuario eliminado exitosamente");
+                                    }
+                                }
+                            )
                         }
                     }
                 )
