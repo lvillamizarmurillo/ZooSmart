@@ -17,22 +17,23 @@ CREATE TABLE IF NOT EXISTS publicaciones(
     titulo VARCHAR(255),
     descripcion TEXT,
     imagen_ruta VARCHAR(255),
-    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    estado BOOLEAN NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE IF NOT EXISTS animales(
     animal_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
-    user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
     post_id INT(10) UNSIGNED, FOREIGN KEY (post_id) REFERENCES publicaciones(post_id),
     nombre VARCHAR(50),
     especie VARCHAR(50),
-    edad INT(3)
+    edad INT(3),
+    estado BOOLEAN NOT NULL, FOREIGN KEY (estado) REFERENCES publicaciones(estado)
 );
 
 CREATE TABLE IF NOT EXISTS me_gusta(
     like_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
-    user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
     post_id INT(10) UNSIGNED, FOREIGN KEY (post_id) REFERENCES publicaciones(post_id),
+    estado BOOLEAN NOT NULL, FOREIGN KEY (estado) REFERENCES publicaciones(estado),
     fecha_like TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
@@ -80,7 +81,7 @@ INSERT INTO users (user_id, nombre, email, numero, password) VALUES
 (9, 'Emily', 'britanico@gmail.com', '31812652894', 'password9'),
 (10, 'Leo', 'ruso@gmail.com', '23156181515', 'password10');
 
-INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta) VALUES
+INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta, estado) VALUES
 (35, 1, 'Rico o pobre', 'asdfasdfsadfsdf', 'http://imagen/ruta1'),
 (85, 2, 'bitcoin', 'dsgdsfgfdsgfdsdfsg', 'http://imagen/ruta2'),
 (87, 3, 'el tiempo', 'dsfgdfgsdfgfdgsd', 'http://imagen/ruta3'),
@@ -93,7 +94,7 @@ INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta) V
 (96, 10, 'Dinamarca', 'jhñlkhklhjjfgsfdsaf', 'http://imagen/ruta10'),
 (99, 3, 'Venezuela', 'yurtuityiuytiyu', 'http://imagen/ruta11');
 
-INSERT INTO animales (animal_id, user_id, post_id, nombre, especie, edad) VALUES
+INSERT INTO animales (animal_id, user_id, post_id, nombre, especie, edad, estado) VALUES
 (1, 1, 35, 'perro', 'canino', '12'),
 (2,2,85, 'gato', 'gatuno', '13'),
 (3,3,87, 'canario', 'ave', '15'),
@@ -106,11 +107,11 @@ INSERT INTO animales (animal_id, user_id, post_id, nombre, especie, edad) VALUES
 (12,10,96, 'chimpance', 'sopadomacaco', '6'),
 (10,3,99, 'camionero', 'trenalsur', '23');
 
-INSERT INTO me_gusta (like_id, user_id, post_id) VALUES
-(1, 1, 35),
-(2,2,85),
-(3,3,87),
-(4,4,84),
-(5,5,25),
-(6,6,98),
-(7,7,36);
+INSERT INTO me_gusta (like_id, post_id, estado) VALUES
+(1, 35, true),
+(2,85, false),
+(3,87, true),
+(4,84, false),
+(5,25, true),
+(6,98, true),
+(7,36, true);

@@ -26,8 +26,10 @@ __decorate([
 ], storagePublicaciones.prototype, "post_id", void 0);
 __decorate([
     Expose({ name: 'user-id' }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro user-id es obligatorio" }; } }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro user-id debe ser un numero" }; } }),
+    Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
+        return (value);
+    else
+        throw { status: 422, message: "El formato del parametro user-id debe ser un numero." }; }, { toClassOnly: true }),
     __metadata("design:type", Number)
 ], storagePublicaciones.prototype, "user_id", void 0);
 __decorate([

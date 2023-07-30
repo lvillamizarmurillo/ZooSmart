@@ -54,6 +54,9 @@ appPublicaciones.get("/id",(req, res) => {
 
 appPublicaciones.post("/", appmiddlewarePublicaciones, (req,res)=>{
     const {post_id, user_id, titulo, descripcion, imagen_ruta} = req.body;
+    if(!user_id){
+        return res.status(422).send("El parametro user-id es obligatorio");
+    }
     con.query(
         `SELECT user_id FROM users WHERE user_id = ?`,
         [user_id],(err,data)=>{
@@ -81,33 +84,25 @@ appPublicaciones.post("/", appmiddlewarePublicaciones, (req,res)=>{
 });
 
 appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
-    const {post_id, user_id, titulo, descripcion, imagen_ruta} = req.body;
+    let {post_id, user_id, titulo, descripcion, imagen_ruta} = req.body;
+    if(user_id){
+        return res.status(422).send("El parametro user-id no se puede cambiar");
+    }
     con.query(
-        `SELECT user_id FROM users WHERE user_id = ?`,
-        [user_id],(err,data)=>{
-            if(err){
-                res.status(404).send("El user_id no existe, debe relacionarse la publicacion a un usuario valido.");
-            }else if(data.length === 0){
-                res.status(500).send("Error: La publicacion esta referenciada a un usuario que no existe, verifique el user_id");
-            }else{
-                con.query(
-                    `UPDATE publicaciones SET user_id = ?, titulo = ?, descripcion = ?, imagen_ruta = ? WHERE post_id = ?`,
-                    [user_id, titulo, descripcion, imagen_ruta,post_id],
-                    (err,data)=>{
-                        if (err) {
-                            console.log(err);
-                            res.status(500).send("Error en el servidor: "+err.sqlMessage);
-                          }else if(data.length === 0){
-                            res.status(500).send("Error: la publicacion no existe en la tabla de publicaciones");
-                          } else {
-                            console.log(data);
-                            res.status(200).send("publicacion actualizada con exito");
-                          }
-                    }
-                )
+        `UPDATE publicaciones SET titulo = ?, descripcion = ?, imagen_ruta = ? WHERE post_id = ?`,
+        [titulo, descripcion, imagen_ruta,post_id],
+        (err,data)=>{
+            if (err) {
+                console.log(err);
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            } else if(data.length === 0){
+                res.status(500).send("Error: la publicacion no existe en la tabla de publicaciones");
+            } else {
+                console.log(data);
+                res.status(200).send("publicacion actualizada con exito");
             }
         }
-    );
+    )
 });
 
 appPublicaciones.delete("/",(req,res)=>{

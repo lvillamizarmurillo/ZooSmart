@@ -91,48 +91,6 @@ appLikes.post("/", appmiddlewareLikes, (req,res)=>{
     )
 });
 
-appLikes.put("/", appmiddlewareLikes,(req,res)=>{
-    const {like_id, user_id, post_id} = req.body;
-    con.query(
-        `SELECT user_id FROM users WHERE user_id = ?`,
-        [user_id],(err,data)=>{
-            if(err){
-                res.status(404).send("El user_id no existe, debe relacionarse el animal a un usuario valido.");
-            }else if(data.length === 0){
-                res.status(500).send("Error: El like esta referenciada a un usuario que no existe, verifique el user_id");
-            }else{
-                con.query(
-                    `SELECT post_id FROM publicaciones WHERE post_id = ?`,
-                    [post_id],(err,data)=>{
-                        if(err){
-                            res.status(404).send("El post_id no existe, debe relacionarse el animal a una publicacion valida.");
-                        }else if(data.length === 0){
-                            res.status(500).send("Error: El like esta referenciada a una publicacion que no existe, verifique el post_id");
-                        }else{
-                            con.query(
-                                `UPDATE me_gusta SET user_id = ?, post_id = ? WHERE like_id = ?`,
-                                [user_id, post_id, like_id],
-                                (err,data)=>{
-                                    if (err) {
-                                        console.log(err);
-                                        res.status(500).send("Error en el servidor: "+err.sqlMessage);
-                                      }else if(data.length === 0){
-                                        res.status(500).send("Error: El like no existe en la tabla de animales");
-                                      } else {
-                                        console.log(data);
-                                        res.status(200).send("Like actualizado con exito");
-                                      }
-                                }
-                            )
-                        }
-                    }
-                )
-                
-            }
-        }
-    );
-});
-
 appLikes.delete("/", (req,res)=>{
     res.status(404).send("No se pueden eliminar los likes una vez creados")
 })
