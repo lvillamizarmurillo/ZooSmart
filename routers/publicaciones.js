@@ -21,7 +21,7 @@ appPublicaciones.use((req,res,next)=>{
 
 appPublicaciones.get("/",(req, res) => {
     con.query(
-        `SELECT post_id,user_id,titulo,descripcion,imagen_ruta,DATE_FORMAT(fecha_creacion, '%d-%m-%Y') AS fecha_creacion FROM publicaciones `, (error,data)=>{
+        `SELECT post_id,user_id,titulo,descripcion,imagen_ruta,estado,DATE_FORMAT(fecha_creacion, '%d-%m-%Y') AS fecha_creacion FROM publicaciones `, (error,data)=>{
             if(error){
                 console.log(error);
                 res.status(500).send("Error en el servidor: "+err.sqlMessage);
@@ -38,7 +38,7 @@ appPublicaciones.get("/id",(req, res) => {
         return res.status(400).send("Si quiere buscar a una usuario, debe poner id: y el user_id"); 
     }
     con.query(
-        `SELECT user_id,titulo,descripcion,imagen_ruta,DATE_FORMAT(fecha_creacion, '%d-%m-%Y') AS fecha_creacion FROM publicaciones WHERE post_id = ?`,
+        `SELECT user_id,titulo,descripcion,imagen_ruta,estado,DATE_FORMAT(fecha_creacion, '%d-%m-%Y') AS fecha_creacion FROM publicaciones WHERE post_id = ?`,
         [id],(err,data)=>{
             if(err){
                 console.log(err);
@@ -54,6 +54,7 @@ appPublicaciones.get("/id",(req, res) => {
 
 appPublicaciones.post("/", appmiddlewarePublicaciones, (req,res)=>{
     const {post_id, user_id, titulo, descripcion, imagen_ruta} = req.body;
+    let estado = true
     if(!user_id){
         return res.status(422).send("El parametro user-id es obligatorio");
     }
@@ -66,8 +67,8 @@ appPublicaciones.post("/", appmiddlewarePublicaciones, (req,res)=>{
                 res.status(500).send("Error: La publicacion esta referenciada a un usuario que no existe, verifique el user_id");
             }else{
                 con.query(
-                    'INSERT INTO publicaciones(post_id, user_id, titulo, descripcion, imagen_ruta) VALUE(?,?,?,?,?)',
-                    [post_id, user_id, titulo, descripcion, imagen_ruta],
+                    'INSERT INTO publicaciones(post_id, user_id, titulo, descripcion, imagen_ruta, estado) VALUE(?,?,?,?,?,?)',
+                    [post_id, user_id, titulo, descripcion, imagen_ruta,estado],
                     (err,data)=>{
                         if (err) {
                             console.log(err);
@@ -85,12 +86,13 @@ appPublicaciones.post("/", appmiddlewarePublicaciones, (req,res)=>{
 
 appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
     let {post_id, user_id, titulo, descripcion, imagen_ruta} = req.body;
+    let estado = true
     if(user_id){
         return res.status(422).send("El parametro user-id no se puede cambiar");
     }
     con.query(
-        `UPDATE publicaciones SET titulo = ?, descripcion = ?, imagen_ruta = ? WHERE post_id = ?`,
-        [titulo, descripcion, imagen_ruta,post_id],
+        `UPDATE publicaciones SET titulo = ?, descripcion = ?, imagen_ruta = ?, estado = ? WHERE post_id = ?`,
+        [titulo, descripcion, imagen_ruta,estado,post_id],
         (err,data)=>{
             if (err) {
                 console.log(err);
@@ -106,7 +108,42 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
 });
 
 appPublicaciones.delete("/",(req,res)=>{
-    return res.status(500).send("No esta habilitado para borrar publicaciones.");
+    const {id} = req.body;
+    let estado = false
+    if(!id){
+        return res.status(422).send("Si quiere desabilitar una publicacion, debe poner id: y el post_id");
+    }
+    con.query(
+        `UPDATE publicaciones SET estado = ? WHERE post_id = ?`,
+        [estado,id],(err,data)=>{
+            if(err){
+                console.log(err);
+                res.status(500).send("Error en el servidor: "+err.sqlMessage);
+            }else{
+                con.query(
+                    `UPDATE animales SET estado = ? WHERE post_id = ?`,
+                    [estado,id],(err,data)=>{
+                        if(err){
+                            console.log(err);
+                            res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                        }else{
+                            con.query(
+                                `UPDATE me_gusta SET estado = ? WHERE post_id = ?`,
+                                [estado,id],(err,data)=>{
+                                    if(err){
+                                        console.log(err);
+                                        res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                                    }else{
+                                        res.status(200).send("La publicacion se inabilito con éxito");
+                                    }
+                                }
+                            )
+                        }
+                    }
+                )
+            }
+        }
+    )
 })
 
 export default appPublicaciones;
