@@ -10,10 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose } from 'class-transformer';
 import { IsDefined, IsNumber, IsString } from 'class-validator';
 export class storageAnimales {
-    constructor(animal_id, user_id, post_id, nombre, especie, edad) {
+    constructor(animal_id, nombre, especie, edad) {
         this.animal_id = animal_id;
-        this.user_id = user_id;
-        this.post_id = post_id;
         this.nombre = nombre;
         this.especie = especie;
         this.edad = edad;
@@ -25,18 +23,6 @@ __decorate([
     IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro id debe ser un numero" }; } }),
     __metadata("design:type", Number)
 ], storageAnimales.prototype, "animal_id", void 0);
-__decorate([
-    Expose({ name: 'user-id' }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro user-id es obligatorio" }; } }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro user-id debe ser un numero" }; } }),
-    __metadata("design:type", Number)
-], storageAnimales.prototype, "user_id", void 0);
-__decorate([
-    Expose({ name: 'post-id' }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro post-id es obligatorio" }; } }),
-    IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro post-id debe ser un numero" }; } }),
-    __metadata("design:type", Number)
-], storageAnimales.prototype, "post_id", void 0);
 __decorate([
     Expose({ name: 'nombre' }),
     IsDefined({ message: () => { throw { status: 422, message: "El parametro nombre es obligatorio" }; } }),
