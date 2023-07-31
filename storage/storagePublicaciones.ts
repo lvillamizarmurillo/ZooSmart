@@ -19,13 +19,17 @@ export class storagePublicaciones {
     @Expose({ name: 'imagen-ruta' })
     @Transform(({ value }) => { if(/^[0-9]|[a-z A-Z]|[\S\s]|undefined+$/.test(value)) return (value) ? value : "Sin-Info" ; else throw {status: 406, message: "El formato del parametro imagen-ruta no es correcto"};}, { toClassOnly: true })
     imagen_ruta: string;
+    @Expose({ name: 'animal-id' })
+    @Transform(({ value }) => { if(/^[0-9]|undefined+$/.test(value)) return (value); else throw {status: 422, message: "El formato del parametro animal-id debe ser un numero."};}, { toClassOnly: true })
+    animal_id: number;
 
 
-    constructor(post_id: number, user_id: number, titulo: string, descripcion: string, imagen_ruta: string) {
+    constructor(post_id: number, user_id: number, titulo: string, descripcion: string, imagen_ruta: string, animal_id: number) {
       this.post_id = post_id;
       this.user_id = user_id;
       this.titulo = titulo;
       this.descripcion = descripcion;
       this.imagen_ruta = imagen_ruta;
+      this.animal_id = animal_id;
     }
 }

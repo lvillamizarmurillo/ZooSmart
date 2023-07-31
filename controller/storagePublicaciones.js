@@ -10,12 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Expose, Transform } from 'class-transformer';
 import { IsDefined, IsNumber, IsString } from 'class-validator';
 export class storagePublicaciones {
-    constructor(post_id, user_id, titulo, descripcion, imagen_ruta) {
+    constructor(post_id, user_id, titulo, descripcion, imagen_ruta, animal_id) {
         this.post_id = post_id;
         this.user_id = user_id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen_ruta = imagen_ruta;
+        this.animal_id = animal_id;
     }
 }
 __decorate([
@@ -52,3 +53,11 @@ __decorate([
         throw { status: 406, message: "El formato del parametro imagen-ruta no es correcto" }; }, { toClassOnly: true }),
     __metadata("design:type", String)
 ], storagePublicaciones.prototype, "imagen_ruta", void 0);
+__decorate([
+    Expose({ name: 'animal-id' }),
+    Transform(({ value }) => { if (/^[0-9]|undefined+$/.test(value))
+        return (value);
+    else
+        throw { status: 422, message: "El formato del parametro animal-id debe ser un numero." }; }, { toClassOnly: true }),
+    __metadata("design:type", Number)
+], storagePublicaciones.prototype, "animal_id", void 0);

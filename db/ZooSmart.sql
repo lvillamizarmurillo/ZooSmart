@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS animales(
     animal_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
     nombre VARCHAR(50),
     especie VARCHAR(50),
-    edad INT(3),
-    estado BOOLEAN NOT NULL
+    edad INT(3)
 );
 
 CREATE TABLE IF NOT EXISTS publicaciones(
@@ -81,18 +80,18 @@ INSERT INTO users (user_id, nombre, email, numero, password) VALUES
 (9, 'Emily', 'britanico@gmail.com', '31812652894', 'password9'),
 (10, 'Leo', 'ruso@gmail.com', '23156181515', 'password10');
 
-INSERT INTO animales (animal_id, nombre, especie, edad, estado) VALUES
-(1,'perro', 'canino', '12', true),
-(2,'gato', 'gatuno', '13', false),
-(3,'canario', 'ave', '15', true),
-(4,'capullo', 'champiras', '5', false),
-(5,'semental', 'tolgota', '8', true),
-(6,'Loro', 'mishubishi', '7', true),
-(7,'Champiñon', 'nokia', '8', true),
-(8,'michi', 'terreneitor', '12', true),
-(9,'tamarindo', 'empanadas', '2', true),
-(12,'chimpance', 'sopadomacaco', '6', true),
-(10,'camionero', 'trenalsur', '23', true);
+INSERT INTO animales (animal_id, nombre, especie, edad) VALUES
+(1,'perro', 'canino', '12'),
+(2,'gato', 'gatuno', '13'),
+(3,'canario', 'ave', '15'),
+(4,'capullo', 'champiras', '5'),
+(5,'semental', 'tolgota', '8'),
+(6,'Loro', 'mishubishi', '7'),
+(7,'Champiñon', 'nokia', '8'),
+(8,'michi', 'terreneitor', '12'),
+(9,'tamarindo', 'empanadas', '2'),
+(12,'chimpance', 'sopadomacaco', '6'),
+(10,'camionero', 'trenalsur', '23');
 
 INSERT INTO publicaciones (post_id, user_id, titulo, descripcion, imagen_ruta, estado, animal_id) VALUES
 (35, 1, 'Rico o pobre', 'asdfasdfsadfsdf', 'http://imagen/ruta1', true,1),
