@@ -33,6 +33,11 @@ ZooSmart es un espacio seguro y amigable donde los amantes de los animales puede
 Se usó la `v18.16.1` de NojeJS para este proyecto
 
 1. Clone este repositorio en su máquina local.
+
+   ```
+   git clone https://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:x-oauth-basic@github.com/lvillamizarmurillo/ZooSmart.git
+   ```
+
 2. Se pueden descargar las dependencias con el comando:
 
 ```
@@ -79,7 +84,7 @@ GET http://localhost:port/autorizacion/:tabla?endpoint
 Reemplace `:tabla` con los datos del usuario que va a utilizar los endpoints(users,publicaciones,animales,like). `RECUERDA` Que el port tienes que haberlo definido en el .env Una vez que tenga el token, inclúyalo en el encabezado de sus solicitudes a los endpoints protegidos utilizando la siguiente clave-valor:
 
 ```
-Authorization: Bearer tu_token_aqui
+Authorization: token-de-respuesta
 ```
 
 # Endpoints de ZooSmart
@@ -90,7 +95,11 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
 
 1. `GET /autorizacion/users?endpoint`: Obtiene el token de users, dura 1 h, recomendacion guardarlo.
 
+Una vez que tenga el token, inclúyalo en el encabezado de sus solicitudes a los endpoints protegidos utilizando la siguiente clave-valor:
 
+```
+Authorization: token-de-respuesta
+```
 
 
 
@@ -150,13 +159,90 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
 
   
 
-- `DELETE /users`: Elimina un  usuario registrado guiándose unicamente por el id.
+- `DELETE /users`: No esta habilitado, una vez registrado no se puede eliminar, se hace con el fin de recopilar información.
 
 - *`DELETE /users`:*
 
   ```
   {
-    "id": 7
+  
+  }
+  ```
+
+
+### Animales
+
+`GET /autorizacion/animales?endpoint`: Obtiene el token de animales, dura 1 h, recomendacion guardarlo.
+
+Una vez que tenga el token, inclúyalo en el encabezado de sus solicitudes a los endpoints protegidos utilizando la siguiente clave-valor:
+
+```
+Authorization: token-de-respuesta
+```
+
+
+
+- `GET /animales`: Obtener todos los animales registrados.
+
+- *`GET /animales`:*
+
+  ```
+  {
+  
+  }
+  ```
+
+  
+
+- `GET /animales/id`: Obtener un usuario en especifico que este registrado unicamente por el id.
+
+- *`GET /animales/id`:*
+
+  ```
+  {
+    "id": 3
+  }
+  ```
+
+  -Recuerda revisar la URL para antes de realizar el post ya que para  esta función se le agrega /id extra a la URL, las demás no la tienen.
+
+- `POST /animales`: Crea un nuevo animal.
+
+- *`POST /animales`:*
+
+  ```
+  {
+    "id": 123,
+    "nombre": "Pablo",
+    "especie": "Pollo",
+    "edad": 15
+  }
+  ```
+
+  
+
+- `PUT /animales`: Modifica un  animal, guiándose por el id.
+
+- *`PUT /animales`:*
+
+  ```
+  {
+    "id": 2,
+    "nombre": "Gunter",
+    "especie": "Pinguino",
+    "edad": 6
+  }
+  ```
+
+  
+
+- `DELETE /animales`: No esta habilitado, una vez registrado no se puede eliminar, se hace con el fin de recopilar información.
+
+- *`DELETE /animales`:*
+
+  ```
+  {
+    
   }
   ```
 
@@ -166,7 +252,11 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
 
 `GET /autorizacion/publicaciones?endpoint`: Obtiene el token de publicaciones, dura 1 h, recomendacion guardarlo.
 
+Una vez que tenga el token, inclúyalo en el encabezado de sus solicitudes a los endpoints protegidos utilizando la siguiente clave-valor:
 
+```
+Authorization: token-de-respuesta
+```
 
 
 
@@ -204,101 +294,33 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
     "user-id": 10,
     "titulo": "Venezuela",
     "descripcion": "sdfgsdgfsdgsdfgs",
-    "imagen_ruta": "http://imagen/ruta90"
+    "imagen-ruta": "http://imagen/ruta90",
+    "animal-id": 123
   }
   ```
 
   
 
-- `PUT /publicaciones`: Modifica una publicación, guiándose por el id.
+- `PUT /publicaciones`: Modifica una publicación, guiándose por el id, **Importante**: En el siguiente endpoint no elimina, pasa el estado de activo a inactivo (true o false), y si actualiza por put, esta programado para que automáticamente vuelva a estar la publicación activa (true). 
 
 - *`PUT /publicaciones`:*
 
   ```
   {
-    "id": 99,
-    "user-id": 9,
+    "id": 123,
     "titulo": "Sapamanga",
     "descripcion": "fghfghfghfgh",
-    "imagen_ruta": "http://imagen/ruta100"
+    "imagen-ruta": "http://imagen/ruta100"
   }
   ```
 
-  
+- `DELETE /publicaciones`: Lo único que hará es pasar el estado de activo a inactivo(1 para activo, 0 para inactivo), aparte cualquiera que lo guardara en la tabla de me_gusta se inhabilitara también, para activarlo nuevamente solo actualiza los datos en el put. 
 
-### Animales
-
-`GET /autorizacion/animales?endpoint`: Obtiene el token de animales, dura 1 h, recomendacion guardarlo.
-
-
-
-
-
-- `GET /animales`: Obtener todos los animales registrados.
-
-- *`GET /animales`:*
-
-  ```
-  {
-  
-  }
-  ```
-
-  
-
-- `GET /animales/id`: Obtener un usuario en especifico que este registrado unicamente por el id.
-
-- *`GET /animales/id`:*
-
-  ```
-  {
-    "id": 3
-  }
-  ```
-
-  -Recuerda revisar la URL para antes de realizar el post ya que para  esta función se le agrega /id extra a la URL, las demás no la tienen.
-
-- `POST /animales`: Crea un nuevo animal.
-
-- *`POST /animales`:*
+- *`DELETE /publicaciones`:*
 
   ```
   {
     "id": 123,
-    "user-id": 8,
-    "post-id": 85,
-    "nombre": "Pablo",
-    "especie": "Pollo",
-    "edad": 15
-  }
-  ```
-
-  
-
-- `PUT /animales`: Modifica un  animal, guiándose por el id.
-
-- *`PUT /animales`:*
-
-  ```
-  {
-    "id": 2,
-    "user-id": 3,
-    "post-id":98,
-    "nombre": "Gunter",
-    "especie": "Pinguino",
-    "edad": 6
-  }
-  ```
-
-  
-
-- `DELETE /animales`: Elimina un  animal registrado guiándose unicamente por el id.
-
-- *`DELETE /animales`:*
-
-  ```
-  {
-    "id": 10
   }
   ```
 
@@ -308,7 +330,11 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
 
 `GET /autorizacion/like?endpoint`: Obtiene el token de like, dura 1 h, recomendacion guardarlo.
 
+Una vez que tenga el token, inclúyalo en el encabezado de sus solicitudes a los endpoints protegidos utilizando la siguiente clave-valor:
 
+```
+Authorization: token-de-respuesta
+```
 
 
 
@@ -342,23 +368,30 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
 
   ```
   {
-    "id": 8,
-    "user-id": 1,
-    "post-id": 35
+    "id": 123,
+    "post-id": 123
   }
   ```
 
   
 
-- `PUT /like`: Modifica un  animal, guiándose por el id.
+- `PUT /like`: Obviamente no puede cambiar los datos.
 
 - *`PUT /like`:*
 
   ```
   {
-    "id": 3,
-    "user-id": 6,
-    "post-id":87
+  	
+  }
+  ```
+
+- `DELETE /like`: No esta habilitado, una vez registrado no se puede eliminar, se hace con el fin de recopilar información.
+
+- *`DELETE /like`:*
+
+  ```
+  {
+    
   }
   ```
 
@@ -375,52 +408,39 @@ A continuación, puede utilizar los siguientes endpoints para interactuar con el
    - Relacionada con la tabla de publicaciones y la tabla de me gusta mediante el ID de usuario.
    - Cada usuario puede tener múltiples publicaciones y recibir múltiples me gusta.
    - Puede tener una relación con la tabla de mensajes para permitir la comunicación entre usuarios.
-
 2. Tabla de publicaciones:
 
    - Relacionada con la tabla de usuarios mediante el ID de usuario.
    - Cada publicación pertenece a un usuario específico.
    - Puede tener una relación con la tabla de me gusta para registrar los me gusta recibidos.
-
 3. Tabla de perfiles de usuarios:
 
    - Contiene información adicional de los perfiles de los usuarios registrados.
    - profile_id, user_id, información adicional del perfil (ubicación, biografía, etc.).
    - Esta tabla permite a los usuarios proporcionar detalles adicionales sobre sí mismos en sus perfiles.
-
 4. Tabla de me gusta:
 
    - Relacionada con la tabla de usuarios y la tabla de publicaciones mediante el ID de usuario y el ID de publicación.
    - Registra qué usuarios han dado me gusta a qué publicaciones.
-
 5. Tabla de mensajes:
 
    - Relacionada con la tabla de usuarios mediante el ID de remitente y el ID de destinatario.
    - Almacena los mensajes enviados entre usuarios.
-
-6. Tabla de contactos:
-
-   - Relacionada con la tabla de usuarios mediante el ID de usuario y el ID de usuario de contacto.
-   - Permite a los usuarios guardar y mantener una lista de contactos.
-
-7. Tabla de animales:
+6. Tabla de animales:
 
    - Descripción: Almacena información específica sobre los animales disponibles para adopción en la plataforma.
    - Columnas sugeridas: animal_id, user_id, nombre del animal, especie, edad, descripción, imagen.
-   - Esta tabla proporciona detalles clave sobre cada animal, como nombre, especie, edad y descripción, lo que ayuda a los usuarios a encontrar la mascota adecuada para su adopción.
-
+   - Esta tabla proporciona detalles clave sobre cada animal, como nombre, especie, edad, lo que ayuda a los usuarios a encontrar la mascota adecuada para su adopción.
 8. Tabla de países:
 
    - Descripción: Almacena información sobre los países disponibles en la plataforma.
    - Columnas sugeridas: id_pais (clave primaria), nombre del país.
    - Esta tabla permite a los usuarios seleccionar el país al que pertenece la ubicación del animal en la publicación.
-
 9. Tabla de ciudades:
 
    - Descripción: Almacena información sobre las ciudades disponibles en la plataforma.
    - Columnas sugeridas: id_ciudad (clave primaria), nombre de la ciudad, id_pais (clave externa que hace referencia a la tabla de países).
    - Esta tabla proporciona una lista de ciudades asociadas a cada país para que los usuarios elijan la ubicación específica del animal en la publicación.
-
 10. Imagen de referencia:
 
    ![](./img/Estructura.png)

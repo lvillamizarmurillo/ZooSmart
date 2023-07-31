@@ -116,7 +116,7 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
             } else {
                 con.query(
                     `SELECT estado FROM me_gusta WHERE post_id = ?`,
-                    [id],(err,data)=>{
+                    [post_id],(err,data)=>{
                         if (err) {
                             console.log(err);
                             res.status(500).send("Error en el servidor: "+err.sqlMessage);
@@ -125,7 +125,7 @@ appPublicaciones.put("/", appmiddlewarePublicaciones,(req,res)=>{
                         } else {
                             con.query(
                                 `UPDATE me_gusta SET estado = ? WHERE post_id = ?`,
-                                [estado,id],(err)=>{
+                                [estado,post_id],(err)=>{
                                     if(err){
                                         console.log(err);
                                         res.status(500).send("Error en el servidor: "+err.sqlMessage);

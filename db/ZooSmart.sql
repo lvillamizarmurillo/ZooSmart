@@ -56,12 +56,6 @@ CREATE TABLE IF NOT EXISTS mensajes(
     fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS contactos(
-    contacto_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
-    user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),
-    contact_user_id INT(10) UNSIGNED, FOREIGN KEY (contact_user_id) REFERENCES users(user_id)
-);
-
 CREATE TABLE IF NOT EXISTS perfil(
     perfil_id INT(10) UNSIGNED NOT NULL PRIMARY KEY,
     user_id INT(10) UNSIGNED, FOREIGN KEY (user_id) REFERENCES users(user_id),

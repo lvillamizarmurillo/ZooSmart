@@ -53,38 +53,27 @@ appLikes.get("/id",(req, res) => {
 });
 
 appLikes.post("/", appmiddlewareLikes, (req,res)=>{
-    const {like_id, user_id, post_id} = req.body;
+    const {like_id, post_id} = req.body;
     let estado = true;
     con.query(
-        `SELECT user_id FROM users WHERE user_id = ?`,
-        [user_id],(err,data)=>{
+        `SELECT post_id FROM publicaciones WHERE post_id = ?`,
+        [post_id],(err,data)=>{
             if(err){
-                res.status(404).send("El user_id no existe, debe relacionarse el like a un usuario valido.");
+                res.status(404).send("El post_id no existe, debe relacionarse el like a una publicacion valida.");
             }else if(data.length === 0){
-                res.status(500).send("Error: El like esta referenciado a un usuario que no existe, verifique el user_id");
+                res.status(500).send("Error: El like esta referenciado a una publicacion que no existe, verifique el post_id");
             }else{
                 con.query(
-                    `SELECT post_id FROM publicaciones WHERE post_id = ?`,
-                    [post_id],(err,data)=>{
-                        if(err){
-                            res.status(404).send("El post_id no existe, debe relacionarse el like a una publicacion valida.");
-                        }else if(data.length === 0){
-                            res.status(500).send("Error: El like esta referenciado a una publicacion que no existe, verifique el post_id");
-                        }else{
-                            con.query(
-                                'INSERT INTO me_gusta(like_id, user_id, post_id,estado) VALUE(?,?,?,?)',
-                                [like_id, user_id, post_id,estado],
-                                (err,data)=>{
-                                    if (err) {
-                                        console.log(err);
-                                        res.status(500).send("Error en el servidor: "+err.sqlMessage);
-                                      } else {
-                                        console.log(data);
-                                        res.status(200).send("Nuevo like agregado exitosamente");
-                                      }
-                                }
-                            )
-                        }
+                    'INSERT INTO me_gusta(like_id,post_id,estado) VALUE(?,?,?)',
+                    [like_id, post_id,estado],
+                    (err,data)=>{
+                        if (err) {
+                            console.log(err);
+                            res.status(500).send("Error en el servidor: "+err.sqlMessage);
+                          } else {
+                            console.log(data);
+                            res.status(200).send("Nuevo like agregado exitosamente");
+                          }
                     }
                 )
             }
