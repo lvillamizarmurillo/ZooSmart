@@ -88,4 +88,8 @@ appUsers.put("/", appmiddlewareUsers,(req,res)=>{
     )
 });
 
+appUsers.delete("/", (req,res)=>{
+    res.status(404).send("No se pueden eliminar los usuarios una vez creados, puede quejarse al correo: nomeimporta@gmail.com :)")
+})
+
 export default appUsers;

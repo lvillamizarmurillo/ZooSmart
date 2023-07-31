@@ -54,11 +54,12 @@ appLikes.get("/id",(req, res) => {
 
 appLikes.post("/", appmiddlewareLikes, (req,res)=>{
     const {like_id, user_id, post_id} = req.body;
+    let estado = true;
     con.query(
         `SELECT user_id FROM users WHERE user_id = ?`,
         [user_id],(err,data)=>{
             if(err){
-                res.status(404).send("El user_id no existe, debe relacionarse el animal a un usuario valido.");
+                res.status(404).send("El user_id no existe, debe relacionarse el like a un usuario valido.");
             }else if(data.length === 0){
                 res.status(500).send("Error: El like esta referenciado a un usuario que no existe, verifique el user_id");
             }else{
@@ -66,13 +67,13 @@ appLikes.post("/", appmiddlewareLikes, (req,res)=>{
                     `SELECT post_id FROM publicaciones WHERE post_id = ?`,
                     [post_id],(err,data)=>{
                         if(err){
-                            res.status(404).send("El post_id no existe, debe relacionarse el animal a una publicacion valida.");
+                            res.status(404).send("El post_id no existe, debe relacionarse el like a una publicacion valida.");
                         }else if(data.length === 0){
                             res.status(500).send("Error: El like esta referenciado a una publicacion que no existe, verifique el post_id");
                         }else{
                             con.query(
-                                'INSERT INTO me_gusta(like_id, user_id, post_id) VALUE(?,?,?)',
-                                [like_id, user_id, post_id],
+                                'INSERT INTO me_gusta(like_id, user_id, post_id,estado) VALUE(?,?,?,?)',
+                                [like_id, user_id, post_id,estado],
                                 (err,data)=>{
                                     if (err) {
                                         console.log(err);
@@ -92,7 +93,7 @@ appLikes.post("/", appmiddlewareLikes, (req,res)=>{
 });
 
 appLikes.delete("/", (req,res)=>{
-    res.status(404).send("No se pueden eliminar los likes una vez creados")
+    res.status(404).send("No se pueden eliminar los likes una vez creados, puede quejarse al correo: nomeimporta@gmail.com :)")
 })
 
 

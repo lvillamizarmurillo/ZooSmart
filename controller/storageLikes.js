@@ -8,11 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Expose } from 'class-transformer';
-import { IsDefined, IsNumber, IsBoolean } from 'class-validator';
+import { IsDefined, IsNumber } from 'class-validator';
 export class storageLikes {
-    constructor(like_id, post_id, estado) {
+    constructor(like_id, post_id) {
         this.like_id = like_id;
-        this.estado = estado;
         this.post_id = post_id;
     }
 }
@@ -28,9 +27,3 @@ __decorate([
     IsNumber({}, { message: () => { throw { status: 406, message: "El formato del parametro post-id debe ser un numero" }; } }),
     __metadata("design:type", Number)
 ], storageLikes.prototype, "post_id", void 0);
-__decorate([
-    Expose({ name: 'estado' }),
-    IsDefined({ message: () => { throw { status: 422, message: "El parametro estado es obligatorio" }; } }),
-    IsBoolean({ message: () => { throw { status: 406, message: "El formato del parametro estado debe ser un booleano('true','false')" }; } }),
-    __metadata("design:type", Boolean)
-], storageLikes.prototype, "estado", void 0);

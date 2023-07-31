@@ -9,15 +9,9 @@ export class storageLikes {
     @IsDefined({message: ()=>{throw {status:422, message: "El parametro post-id es obligatorio"}}})
     @IsNumber({}, {message: ()=>{throw {status:406, message: "El formato del parametro post-id debe ser un numero"}}})
     post_id: number;
-    @Expose({ name: 'estado' })
-    @IsDefined({message: ()=>{throw {status:422, message: "El parametro estado es obligatorio"}}})
-    @IsBoolean({message: ()=>{throw {status:406, message: "El formato del parametro estado debe ser un booleano('true','false')"}}})
-    estado: boolean;
 
-
-    constructor(like_id: number, post_id: number, estado:boolean) {
+    constructor(like_id: number, post_id: number) {
       this.like_id = like_id;
-      this.estado = estado;
       this.post_id = post_id;
     }
 }
