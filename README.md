@@ -35,7 +35,7 @@ Se usó la `v18.16.1` de NojeJS para este proyecto
 1. Clone este repositorio en su máquina local.
 
    ```
-   git clone https://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:x-oauth-basic@github.com/lvillamizarmurillo/ZooSmart.git
+   git clone https://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:x-oauth-basic@github.com/lvillamizarmurillo/ZooSmart.git
    ```
 
 
