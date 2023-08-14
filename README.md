@@ -38,7 +38,14 @@ Se usó la `v18.16.1` de NojeJS para este proyecto
    git clone https://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:x-oauth-basic@github.com/lvillamizarmurillo/ZooSmart.git
    ```
 
-2. Se pueden descargar las dependencias con el comando:
+
+   2.Se instalan las dependencias del package.json con el siguiente comando:
+
+```
+npm i
+```
+
+3. Las dependencias utilizadas se pueden descargar las dependencias con el comando:
 
 ```
 npm i -E -D nodemon express dotenv class-transformer reflect-metadata class-validator typescript mysql2 jose express-session
